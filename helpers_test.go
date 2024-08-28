@@ -9,7 +9,7 @@ func TestNewWebhook(t *testing.T) {
 
 	if err != nil ||
 		result.URL.String() != "https://example.com/token" ||
-		result.Certificate != interface{}(nil) ||
+		result.Certificate != any(nil) ||
 		result.MaxConnections != 0 ||
 		len(result.AllowedUpdates) != 0 {
 		t.Fail()
@@ -179,13 +179,16 @@ func TestNewInlineKeyboardButtonLoginURL(t *testing.T) {
 }
 
 func TestNewInlineKeyboardButtonSwitchInlineQueryChoosenChat(t *testing.T) {
-	result := NewInlineKeyboardButtonSwitchInlineQueryChoosenChat("text", SwitchInlineQueryChosenChat{
-		Query:             "query",
-		AllowUserChats:    false,
-		AllowBotChats:     false,
-		AllowGroupChats:   false,
-		AllowChannelChats: false,
-	})
+	result := NewInlineKeyboardButtonSwitchInlineQueryChoosenChat(
+		"text",
+		SwitchInlineQueryChosenChat{
+			Query:             "query",
+			AllowUserChats:    false,
+			AllowBotChats:     false,
+			AllowGroupChats:   false,
+			AllowChannelChats: false,
+		},
+	)
 
 	if result.Text != "text" ||
 		result.SwitchInlineQueryChosenChat.Query != "query" ||
@@ -233,7 +236,6 @@ func TestNewEditMessageReplyMarkup(t *testing.T) {
 		edit.BaseEdit.MessageID != ReplyToMessageID {
 		t.Fail()
 	}
-
 }
 
 func TestNewDice(t *testing.T) {

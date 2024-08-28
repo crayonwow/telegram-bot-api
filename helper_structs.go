@@ -13,7 +13,12 @@ func (base ChatConfig) params() (Params, error) {
 
 func (base ChatConfig) paramsWithKey(key string) (Params, error) {
 	params := make(Params)
-	return params, params.AddFirstValid(key, base.ChatID, base.ChannelUsername, base.SuperGroupUsername)
+	return params, params.AddFirstValid(
+		key,
+		base.ChatID,
+		base.ChannelUsername,
+		base.SuperGroupUsername,
+	)
 }
 
 // BaseChat is base type for all chat config types.
@@ -22,7 +27,7 @@ type BaseChat struct {
 	BusinessConnectionID BusinessConnectionID
 	MessageThreadID      int
 	ProtectContent       bool
-	ReplyMarkup          interface{}
+	ReplyMarkup          any
 	DisableNotification  bool
 	MessageEffectID      string // for private chats only
 	ReplyParameters      ReplyParameters
@@ -65,8 +70,8 @@ func (file BaseFile) params() (Params, error) {
 // BaseEdit is base type of all chat edits.
 type BaseEdit struct {
 	BaseChatMessage
-	InlineMessageID      string
-	ReplyMarkup          *InlineKeyboardMarkup
+	InlineMessageID string
+	ReplyMarkup     *InlineKeyboardMarkup
 }
 
 func (edit BaseEdit) params() (Params, error) {

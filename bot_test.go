@@ -26,11 +26,11 @@ type testLogger struct {
 	t *testing.T
 }
 
-func (t testLogger) Println(v ...interface{}) {
+func (t testLogger) Println(v ...any) {
 	t.t.Log(v...)
 }
 
-func (t testLogger) Printf(format string, v ...interface{}) {
+func (t testLogger) Printf(format string, v ...any) {
 	t.t.Logf(format, v...)
 }
 
@@ -62,7 +62,6 @@ func TestGetUpdates(t *testing.T) {
 	u := NewUpdate(0)
 
 	_, err := bot.GetUpdates(u)
-
 	if err != nil {
 		t.Error(err)
 	}
@@ -74,7 +73,6 @@ func TestSendWithMessage(t *testing.T) {
 	msg := NewMessage(ChatID, "A test message from the test library in telegram-bot-api")
 	msg.ParseMode = ModeMarkdown
 	_, err := bot.Send(msg)
-
 	if err != nil {
 		t.Error(err)
 	}
@@ -86,7 +84,6 @@ func TestSendWithMessageReply(t *testing.T) {
 	msg := NewMessage(ChatID, "A test message from the test library in telegram-bot-api")
 	msg.ReplyParameters.MessageID = ReplyToMessageID
 	_, err := bot.Send(msg)
-
 	if err != nil {
 		t.Error(err)
 	}
@@ -97,7 +94,6 @@ func TestSendWithMessageForward(t *testing.T) {
 
 	msg := NewForward(ChatID, ChatID, ReplyToMessageID)
 	_, err := bot.Send(msg)
-
 	if err != nil {
 		t.Error(err)
 	}
@@ -129,7 +125,6 @@ func TestSendWithNewPhoto(t *testing.T) {
 	msg := NewPhoto(ChatID, FilePath("tests/image.jpg"))
 	msg.Caption = "Test"
 	_, err := bot.Send(msg)
-
 	if err != nil {
 		t.Error(err)
 	}
@@ -144,7 +139,6 @@ func TestSendWithNewPhotoWithFileBytes(t *testing.T) {
 	msg := NewPhoto(ChatID, b)
 	msg.Caption = "Test"
 	_, err := bot.Send(msg)
-
 	if err != nil {
 		t.Error(err)
 	}
@@ -159,7 +153,6 @@ func TestSendWithNewPhotoWithFileReader(t *testing.T) {
 	msg := NewPhoto(ChatID, reader)
 	msg.Caption = "Test"
 	_, err := bot.Send(msg)
-
 	if err != nil {
 		t.Error(err)
 	}
@@ -172,7 +165,6 @@ func TestSendWithNewPhotoReply(t *testing.T) {
 	msg.ReplyParameters.MessageID = ReplyToMessageID
 
 	_, err := bot.Send(msg)
-
 	if err != nil {
 		t.Error(err)
 	}
@@ -184,7 +176,6 @@ func TestSendNewPhotoToChannel(t *testing.T) {
 	msg := NewPhotoToChannel(Channel, FilePath("tests/image.jpg"))
 	msg.Caption = "Test"
 	_, err := bot.Send(msg)
-
 	if err != nil {
 		t.Error(err)
 		t.Fail()
@@ -200,7 +191,6 @@ func TestSendNewPhotoToChannelFileBytes(t *testing.T) {
 	msg := NewPhotoToChannel(Channel, b)
 	msg.Caption = "Test"
 	_, err := bot.Send(msg)
-
 	if err != nil {
 		t.Error(err)
 		t.Fail()
@@ -216,7 +206,6 @@ func TestSendNewPhotoToChannelFileReader(t *testing.T) {
 	msg := NewPhotoToChannel(Channel, reader)
 	msg.Caption = "Test"
 	_, err := bot.Send(msg)
-
 	if err != nil {
 		t.Error(err)
 		t.Fail()
@@ -229,7 +218,6 @@ func TestSendWithExistingPhoto(t *testing.T) {
 	msg := NewPhoto(ChatID, FileID(ExistingPhotoFileID))
 	msg.Caption = "Test"
 	_, err := bot.Send(msg)
-
 	if err != nil {
 		t.Error(err)
 	}
@@ -240,7 +228,6 @@ func TestSendWithNewDocument(t *testing.T) {
 
 	msg := NewDocument(ChatID, FilePath("tests/image.jpg"))
 	_, err := bot.Send(msg)
-
 	if err != nil {
 		t.Error(err)
 	}
@@ -252,7 +239,6 @@ func TestSendWithNewDocumentAndThumb(t *testing.T) {
 	msg := NewDocument(ChatID, FilePath("tests/voice.ogg"))
 	msg.Thumb = FilePath("tests/image.jpg")
 	_, err := bot.Send(msg)
-
 	if err != nil {
 		t.Error(err)
 	}
@@ -263,7 +249,6 @@ func TestSendWithExistingDocument(t *testing.T) {
 
 	msg := NewDocument(ChatID, FileID(ExistingDocumentFileID))
 	_, err := bot.Send(msg)
-
 	if err != nil {
 		t.Error(err)
 	}
@@ -277,7 +262,6 @@ func TestSendWithNewAudio(t *testing.T) {
 	msg.Duration = 10
 	msg.Performer = "TEST"
 	_, err := bot.Send(msg)
-
 	if err != nil {
 		t.Error(err)
 	}
@@ -292,7 +276,6 @@ func TestSendWithExistingAudio(t *testing.T) {
 	msg.Performer = "TEST"
 
 	_, err := bot.Send(msg)
-
 	if err != nil {
 		t.Error(err)
 	}
@@ -304,7 +287,6 @@ func TestSendWithNewVoice(t *testing.T) {
 	msg := NewVoice(ChatID, FilePath("tests/voice.ogg"))
 	msg.Duration = 10
 	_, err := bot.Send(msg)
-
 	if err != nil {
 		t.Error(err)
 	}
@@ -316,7 +298,6 @@ func TestSendWithExistingVoice(t *testing.T) {
 	msg := NewVoice(ChatID, FileID(ExistingVoiceFileID))
 	msg.Duration = 10
 	_, err := bot.Send(msg)
-
 	if err != nil {
 		t.Error(err)
 	}
@@ -336,7 +317,6 @@ func TestSendWithLocation(t *testing.T) {
 	bot, _ := getBot(t)
 
 	_, err := bot.Send(NewLocation(ChatID, 40, 40))
-
 	if err != nil {
 		t.Error(err)
 	}
@@ -360,7 +340,6 @@ func TestSendWithNewVideo(t *testing.T) {
 	msg.Caption = "TEST"
 
 	_, err := bot.Send(msg)
-
 	if err != nil {
 		t.Error(err)
 	}
@@ -374,7 +353,6 @@ func TestSendWithExistingVideo(t *testing.T) {
 	msg.Caption = "TEST"
 
 	_, err := bot.Send(msg)
-
 	if err != nil {
 		t.Error(err)
 	}
@@ -387,7 +365,6 @@ func TestSendWithNewVideoNote(t *testing.T) {
 	msg.Duration = 10
 
 	_, err := bot.Send(msg)
-
 	if err != nil {
 		t.Error(err)
 	}
@@ -400,7 +377,6 @@ func TestSendWithExistingVideoNote(t *testing.T) {
 	msg.Duration = 10
 
 	_, err := bot.Send(msg)
-
 	if err != nil {
 		t.Error(err)
 	}
@@ -412,7 +388,6 @@ func TestSendWithNewSticker(t *testing.T) {
 	msg := NewSticker(ChatID, FilePath("tests/image.jpg"))
 
 	_, err := bot.Send(msg)
-
 	if err != nil {
 		t.Error(err)
 	}
@@ -424,7 +399,6 @@ func TestSendWithExistingSticker(t *testing.T) {
 	msg := NewSticker(ChatID, FileID(ExistingStickerFileID))
 
 	_, err := bot.Send(msg)
-
 	if err != nil {
 		t.Error(err)
 	}
@@ -439,7 +413,6 @@ func TestSendWithNewStickerAndKeyboardHide(t *testing.T) {
 		Selective:      false,
 	}
 	_, err := bot.Send(msg)
-
 	if err != nil {
 		t.Error(err)
 	}
@@ -455,7 +428,6 @@ func TestSendWithExistingStickerAndKeyboardHide(t *testing.T) {
 	}
 
 	_, err := bot.Send(msg)
-
 	if err != nil {
 		t.Error(err)
 	}
@@ -466,12 +438,10 @@ func TestSendWithDice(t *testing.T) {
 
 	msg := NewDice(ChatID)
 	_, err := bot.Send(msg)
-
 	if err != nil {
 		t.Error(err)
 		t.Fail()
 	}
-
 }
 
 func TestSendWithDiceWithEmoji(t *testing.T) {
@@ -479,12 +449,10 @@ func TestSendWithDiceWithEmoji(t *testing.T) {
 
 	msg := NewDiceWithEmoji(ChatID, "🏀")
 	_, err := bot.Send(msg)
-
 	if err != nil {
 		t.Error(err)
 		t.Fail()
 	}
-
 }
 
 func TestGetFile(t *testing.T) {
@@ -495,7 +463,6 @@ func TestGetFile(t *testing.T) {
 	}
 
 	_, err := bot.GetFile(file)
-
 	if err != nil {
 		t.Error(err)
 	}
@@ -505,7 +472,6 @@ func TestSendChatConfig(t *testing.T) {
 	bot, _ := getBot(t)
 
 	_, err := bot.Request(NewChatAction(ChatID, ChatTyping))
-
 	if err != nil {
 		t.Error(err)
 	}
@@ -550,19 +516,19 @@ func TestSetWebhookWithCert(t *testing.T) {
 
 	bot.Request(DeleteWebhookConfig{})
 
-	wh, err := NewWebhookWithCert("https://example.com/tgbotapi-test/"+bot.Token, FilePath("tests/cert.pem"))
-
+	wh, err := NewWebhookWithCert(
+		"https://example.com/tgbotapi-test/"+bot.Token,
+		FilePath("tests/cert.pem"),
+	)
 	if err != nil {
 		t.Error(err)
 	}
 	_, err = bot.Request(wh)
-
 	if err != nil {
 		t.Error(err)
 	}
 
 	_, err = bot.GetWebhookInfo()
-
 	if err != nil {
 		t.Error(err)
 	}
@@ -578,19 +544,16 @@ func TestSetWebhookWithoutCert(t *testing.T) {
 	bot.Request(DeleteWebhookConfig{})
 
 	wh, err := NewWebhook("https://example.com/tgbotapi-test/" + bot.Token)
-
 	if err != nil {
 		t.Error(err)
 	}
 
 	_, err = bot.Request(wh)
-
 	if err != nil {
 		t.Error(err)
 	}
 
 	info, err := bot.GetWebhookInfo()
-
 	if err != nil {
 		t.Error(err)
 	}
@@ -607,8 +570,12 @@ func TestSetWebhookWithoutCert(t *testing.T) {
 func TestSendWithMediaGroupPhotoVideo(t *testing.T) {
 	bot, _ := getBot(t)
 
-	cfg := NewMediaGroup(ChatID, []interface{}{
-		NewInputMediaPhoto(FileURL("https://github.com/go-telegram-bot-api/telegram-bot-api/raw/0a3a1c8716c4cd8d26a262af9f12dcbab7f3f28c/tests/image.jpg")),
+	cfg := NewMediaGroup(ChatID, []any{
+		NewInputMediaPhoto(
+			FileURL(
+				"https://github.com/go-telegram-bot-api/telegram-bot-api/raw/0a3a1c8716c4cd8d26a262af9f12dcbab7f3f28c/tests/image.jpg",
+			),
+		),
 		NewInputMediaPhoto(FilePath("tests/image.jpg")),
 		NewInputMediaVideo(FilePath("tests/video.mp4")),
 	})
@@ -630,7 +597,7 @@ func TestSendWithMediaGroupPhotoVideo(t *testing.T) {
 func TestSendWithMediaGroupDocument(t *testing.T) {
 	bot, _ := getBot(t)
 
-	cfg := NewMediaGroup(ChatID, []interface{}{
+	cfg := NewMediaGroup(ChatID, []any{
 		NewInputMediaDocument(FileURL("https://i.imgur.com/unQLJIb.jpg")),
 		NewInputMediaDocument(FilePath("tests/image.jpg")),
 	})
@@ -652,7 +619,7 @@ func TestSendWithMediaGroupDocument(t *testing.T) {
 func TestSendWithMediaGroupAudio(t *testing.T) {
 	bot, _ := getBot(t)
 
-	cfg := NewMediaGroup(ChatID, []interface{}{
+	cfg := NewMediaGroup(ChatID, []any{
 		NewInputMediaAudio(FilePath("tests/audio.mp3")),
 		NewInputMediaAudio(FilePath("tests/audio.mp3")),
 	})
@@ -716,19 +683,16 @@ func ExampleNewWebhook() {
 	log.Printf("Authorized on account %s", bot.Self.UserName)
 
 	wh, err := NewWebhookWithCert("https://www.google.com:8443/"+bot.Token, FilePath("cert.pem"))
-
 	if err != nil {
 		panic(err)
 	}
 
 	_, err = bot.Request(wh)
-
 	if err != nil {
 		panic(err)
 	}
 
 	info, err := bot.GetWebhookInfo()
-
 	if err != nil {
 		panic(err)
 	}
@@ -756,7 +720,6 @@ func ExampleWebhookHandler() {
 	log.Printf("Authorized on account %s", bot.Self.UserName)
 
 	wh, err := NewWebhookWithCert("https://www.google.com:8443/"+bot.Token, FilePath("cert.pem"))
-
 	if err != nil {
 		panic(err)
 	}
@@ -803,14 +766,18 @@ func ExampleInlineConfig() {
 			continue
 		}
 
-		article := NewInlineQueryResultArticle(update.InlineQuery.ID, "Echo", update.InlineQuery.Query)
+		article := NewInlineQueryResultArticle(
+			update.InlineQuery.ID,
+			"Echo",
+			update.InlineQuery.Query,
+		)
 		article.Description = update.InlineQuery.Query
 
 		inlineConf := InlineConfig{
 			InlineQueryID: update.InlineQuery.ID,
 			IsPersonal:    true,
 			CacheTime:     0,
-			Results:       []interface{}{article},
+			Results:       []any{article},
 		}
 
 		if _, err := bot.Request(inlineConf); err != nil {
@@ -835,7 +802,6 @@ func TestDeleteMessage(t *testing.T) {
 		},
 	}
 	_, err := bot.Request(deleteMessageConfig)
-
 	if err != nil {
 		t.Error(err)
 	}
@@ -858,7 +824,6 @@ func TestPinChatMessage(t *testing.T) {
 		DisableNotification: false,
 	}
 	_, err := bot.Request(pinChatMessageConfig)
-
 	if err != nil {
 		t.Error(err)
 	}
@@ -933,7 +898,12 @@ func TestUnpinAllChatMessages(t *testing.T) {
 func TestPolls(t *testing.T) {
 	bot, _ := getBot(t)
 
-	poll := NewPoll(SupergroupChatID, "Are polls working?", NewPollOption("Yes"), NewPollOption("No"))
+	poll := NewPoll(
+		SupergroupChatID,
+		"Are polls working?",
+		NewPollOption("Yes"),
+		NewPollOption("No"),
+	)
 
 	msg, err := bot.Send(poll)
 	if err != nil {
@@ -953,7 +923,9 @@ func TestPolls(t *testing.T) {
 		t.Error("Poll did not end")
 	}
 
-	if result.Options[0].Text != "Yes" || result.Options[0].VoterCount != 0 || result.Options[1].Text != "No" || result.Options[1].VoterCount != 0 {
+	if result.Options[0].Text != "Yes" || result.Options[0].VoterCount != 0 ||
+		result.Options[1].Text != "No" ||
+		result.Options[1].VoterCount != 0 {
 		t.Error("Poll options were incorrect")
 	}
 }
@@ -1007,7 +979,9 @@ func TestCommands(t *testing.T) {
 		t.Error("Unable to set commands")
 	}
 
-	commands, err = bot.GetMyCommandsWithConfig(NewGetMyCommandsWithScope(NewBotCommandScopeAllPrivateChats()))
+	commands, err = bot.GetMyCommandsWithConfig(
+		NewGetMyCommandsWithScope(NewBotCommandScopeAllPrivateChats()),
+	)
 	if err != nil {
 		t.Error("Unable to get commands")
 	}
@@ -1049,7 +1023,7 @@ func TestCommands(t *testing.T) {
 // }
 
 func TestPrepareInputMediaForParams(t *testing.T) {
-	media := []interface{}{
+	media := []any{
 		NewInputMediaPhoto(FilePath("tests/image.jpg")),
 		NewInputMediaVideo(FileID("test")),
 	}

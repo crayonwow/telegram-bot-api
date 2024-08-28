@@ -27,7 +27,7 @@ type BotAPI struct {
 
 	Self            User       `json:"-"`
 	Client          HTTPClient `json:"-"`
-	shutdownChannel chan interface{}
+	shutdownChannel chan any
 
 	apiEndpoint string
 }
@@ -56,7 +56,7 @@ func NewBotAPIWithClient(token, apiEndpoint string, client HTTPClient) (*BotAPI,
 		Token:           token,
 		Client:          client,
 		Buffer:          100,
-		shutdownChannel: make(chan interface{}),
+		shutdownChannel: make(chan any),
 
 		apiEndpoint: apiEndpoint,
 	}
@@ -164,7 +164,11 @@ func (bot *BotAPI) decodeAPIResponse(responseBody io.Reader, resp *APIResponse) 
 }
 
 // UploadFiles makes a request to the API with files.
-func (bot *BotAPI) UploadFiles(endpoint string, params Params, files []RequestFile) (*APIResponse, error) {
+func (bot *BotAPI) UploadFiles(
+	endpoint string,
+	params Params,
+	files []RequestFile,
+) (*APIResponse, error) {
 	r, w := io.Pipe()
 	m := multipart.NewWriter(w)
 
@@ -267,7 +271,6 @@ func (bot *BotAPI) UploadFiles(endpoint string, params Params, files []RequestFi
 // It requires the FileID.
 func (bot *BotAPI) GetFileDirectURL(fileID string) (string, error) {
 	file, err := bot.GetFile(FileConfig{fileID})
-
 	if err != nil {
 		return "", err
 	}
@@ -489,7 +492,10 @@ func (bot *BotAPI) ListenForWebhook(pattern string) UpdatesChannel {
 }
 
 // ListenForWebhookRespReqFormat registers a http handler for a single incoming webhook.
-func (bot *BotAPI) ListenForWebhookRespReqFormat(w http.ResponseWriter, r *http.Request) UpdatesChannel {
+func (bot *BotAPI) ListenForWebhookRespReqFormat(
+	w http.ResponseWriter,
+	r *http.Request,
+) UpdatesChannel {
 	ch := make(chan Update, bot.Buffer)
 
 	func(w http.ResponseWriter, r *http.Request) {
@@ -720,7 +726,9 @@ func (bot *BotAPI) AnswerWebAppQuery(config AnswerWebAppQueryConfig) (SentWebApp
 }
 
 // GetMyDefaultAdministratorRights gets the current default administrator rights of the bot.
-func (bot *BotAPI) GetMyDefaultAdministratorRights(config GetMyDefaultAdministratorRightsConfig) (ChatAdministratorRights, error) {
+func (bot *BotAPI) GetMyDefaultAdministratorRights(
+	config GetMyDefaultAdministratorRightsConfig,
+) (ChatAdministratorRights, error) {
 	var rights ChatAdministratorRights
 
 	resp, err := bot.Request(config)

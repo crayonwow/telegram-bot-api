@@ -63,7 +63,8 @@ func NewMessageToChannel(username string, text string) MessageConfig {
 		BaseChat: BaseChat{
 			ChatConfig: ChatConfig{
 				ChannelUsername: username,
-			}},
+			},
+		},
 		Text: text,
 	}
 }
@@ -150,7 +151,9 @@ func NewSticker(chatID int64, file RequestFileData) StickerConfig {
 }
 
 // NewCustomEmojiStickerSetThumbnal creates a new setCustomEmojiStickerSetThumbnal request
-func NewCustomEmojiStickerSetThumbnal(name, customEmojiID string) SetCustomEmojiStickerSetThumbnailConfig {
+func NewCustomEmojiStickerSetThumbnal(
+	name, customEmojiID string,
+) SetCustomEmojiStickerSetThumbnailConfig {
 	return SetCustomEmojiStickerSetThumbnailConfig{
 		Name:          name,
 		CustomEmojiID: customEmojiID,
@@ -218,7 +221,7 @@ func NewVoice(chatID int64, file RequestFileData) VoiceConfig {
 
 // NewMediaGroup creates a new media group. Files should be an array of
 // two to ten InputMediaPhoto or InputMediaVideo.
-func NewMediaGroup(chatID int64, files []interface{}) MediaGroupConfig {
+func NewMediaGroup(chatID int64, files []any) MediaGroupConfig {
 	return MediaGroupConfig{
 		BaseChat: BaseChat{
 			ChatConfig: ChatConfig{ChatID: chatID},
@@ -353,7 +356,6 @@ func NewUpdate(offset int) UpdateConfig {
 // link is the url parsable link you wish to get the updates.
 func NewWebhook(link string) (WebhookConfig, error) {
 	u, err := url.Parse(link)
-
 	if err != nil {
 		return WebhookConfig{}, err
 	}
@@ -369,7 +371,6 @@ func NewWebhook(link string) (WebhookConfig, error) {
 // file contains a string to a file, FileReader, or FileBytes.
 func NewWebhookWithCert(link string, file RequestFileData) (WebhookConfig, error) {
 	u, err := url.Parse(link)
-
 	if err != nil {
 		return WebhookConfig{}, err
 	}
@@ -575,7 +576,9 @@ func NewInlineQueryResultDocument(id, url, title, mimeType string) InlineQueryRe
 }
 
 // NewInlineQueryResultCachedDocument create a new inline query with cached photo.
-func NewInlineQueryResultCachedDocument(id, documentID, title string) InlineQueryResultCachedDocument {
+func NewInlineQueryResultCachedDocument(
+	id, documentID, title string,
+) InlineQueryResultCachedDocument {
 	return InlineQueryResultCachedDocument{
 		Type:       "document",
 		ID:         id,
@@ -585,7 +588,10 @@ func NewInlineQueryResultCachedDocument(id, documentID, title string) InlineQuer
 }
 
 // NewInlineQueryResultLocation creates a new inline query location.
-func NewInlineQueryResultLocation(id, title string, latitude, longitude float64) InlineQueryResultLocation {
+func NewInlineQueryResultLocation(
+	id, title string,
+	latitude, longitude float64,
+) InlineQueryResultLocation {
 	return InlineQueryResultLocation{
 		Type:      "location",
 		ID:        id,
@@ -596,7 +602,10 @@ func NewInlineQueryResultLocation(id, title string, latitude, longitude float64)
 }
 
 // NewInlineQueryResultVenue creates a new inline query venue.
-func NewInlineQueryResultVenue(id, title, address string, latitude, longitude float64) InlineQueryResultVenue {
+func NewInlineQueryResultVenue(
+	id, title, address string,
+	latitude, longitude float64,
+) InlineQueryResultVenue {
 	return InlineQueryResultVenue{
 		Type:      "venue",
 		ID:        id,
@@ -623,7 +632,12 @@ func NewEditMessageText(chatID int64, messageID int, text string) EditMessageTex
 }
 
 // NewEditMessageTextAndMarkup allows you to edit the text and reply markup of a message.
-func NewEditMessageTextAndMarkup(chatID int64, messageID int, text string, replyMarkup InlineKeyboardMarkup) EditMessageTextConfig {
+func NewEditMessageTextAndMarkup(
+	chatID int64,
+	messageID int,
+	text string,
+	replyMarkup InlineKeyboardMarkup,
+) EditMessageTextConfig {
 	return EditMessageTextConfig{
 		BaseEdit: BaseEdit{
 			BaseChatMessage: BaseChatMessage{
@@ -655,7 +669,11 @@ func NewEditMessageCaption(chatID int64, messageID int, caption string) EditMess
 
 // NewEditMessageReplyMarkup allows you to edit the inline
 // keyboard markup.
-func NewEditMessageReplyMarkup(chatID int64, messageID int, replyMarkup InlineKeyboardMarkup) EditMessageReplyMarkupConfig {
+func NewEditMessageReplyMarkup(
+	chatID int64,
+	messageID int,
+	replyMarkup InlineKeyboardMarkup,
+) EditMessageReplyMarkupConfig {
 	return EditMessageReplyMarkupConfig{
 		BaseEdit: BaseEdit{
 			BaseChatMessage: BaseChatMessage{
@@ -760,7 +778,10 @@ func NewInlineKeyboardButtonWebApp(text string, webapp WebAppInfo) InlineKeyboar
 
 // NewInlineKeyboardButtonSwitchInlineQueryChoosenChat creates an inline keyboard button with text
 // which goes to a SwitchInlineQueryChosenChat.
-func NewInlineKeyboardButtonSwitchInlineQueryChoosenChat(text string, switchInlineQueryChosenChat SwitchInlineQueryChosenChat) InlineKeyboardButton {
+func NewInlineKeyboardButtonSwitchInlineQueryChoosenChat(
+	text string,
+	switchInlineQueryChosenChat SwitchInlineQueryChosenChat,
+) InlineKeyboardButton {
 	return InlineKeyboardButton{
 		Text:                        text,
 		SwitchInlineQueryChosenChat: &switchInlineQueryChosenChat,
@@ -834,7 +855,12 @@ func NewCallbackWithAlert(id, text string) CallbackConfig {
 }
 
 // NewInvoice creates a new Invoice request to the user.
-func NewInvoice(chatID int64, title, description, payload, providerToken, startParameter, currency string, prices []LabeledPrice, suggestedTipAmounts []int) InvoiceConfig {
+func NewInvoice(
+	chatID int64,
+	title, description, payload, providerToken, startParameter, currency string,
+	prices []LabeledPrice,
+	suggestedTipAmounts []int,
+) InvoiceConfig {
 	return InvoiceConfig{
 		BaseChat: BaseChat{
 			ChatConfig: ChatConfig{ChatID: chatID},
@@ -1099,7 +1125,10 @@ func NewGetMyCommandsWithScope(scope BotCommandScope) GetMyCommandsConfig {
 
 // NewGetMyCommandsWithScopeAndLanguage allows you to set the registered
 // commands for a given scope and language code.
-func NewGetMyCommandsWithScopeAndLanguage(scope BotCommandScope, languageCode string) GetMyCommandsConfig {
+func NewGetMyCommandsWithScopeAndLanguage(
+	scope BotCommandScope,
+	languageCode string,
+) GetMyCommandsConfig {
 	return GetMyCommandsConfig{Scope: &scope, LanguageCode: languageCode}
 }
 
@@ -1115,7 +1144,11 @@ func NewSetMyCommandsWithScope(scope BotCommandScope, commands ...BotCommand) Se
 
 // NewSetMyCommandsWithScopeAndLanguage allows you to set the registered commands for a given scope
 // and language code.
-func NewSetMyCommandsWithScopeAndLanguage(scope BotCommandScope, languageCode string, commands ...BotCommand) SetMyCommandsConfig {
+func NewSetMyCommandsWithScopeAndLanguage(
+	scope BotCommandScope,
+	languageCode string,
+	commands ...BotCommand,
+) SetMyCommandsConfig {
 	return SetMyCommandsConfig{Commands: commands, Scope: &scope, LanguageCode: languageCode}
 }
 
@@ -1132,7 +1165,10 @@ func NewDeleteMyCommandsWithScope(scope BotCommandScope) DeleteMyCommandsConfig 
 
 // NewDeleteMyCommandsWithScopeAndLanguage allows you to delete the registered commands for a given
 // scope and language code.
-func NewDeleteMyCommandsWithScopeAndLanguage(scope BotCommandScope, languageCode string) DeleteMyCommandsConfig {
+func NewDeleteMyCommandsWithScopeAndLanguage(
+	scope BotCommandScope,
+	languageCode string,
+) DeleteMyCommandsConfig {
 	return DeleteMyCommandsConfig{Scope: &scope, LanguageCode: languageCode}
 }
 

@@ -1251,7 +1251,7 @@ type ReplyParameters struct {
 	// unique identifier for the chat or username of the channel (in the format @channelusername)
 	//
 	// optional
-	ChatID interface{} `json:"chat_id,omitempty"`
+	ChatID any `json:"chat_id,omitempty"`
 	// AllowSendingWithoutReply true if the message should be sent even
 	// if the specified message to be replied to is not found;
 	// can be used only for replies in the same chat and forum topic.
@@ -1889,8 +1889,7 @@ type ForumTopicCreated struct {
 
 // ForumTopicClosed represents a service message about a forum topic
 // closed in the chat. Currently holds no information.
-type ForumTopicClosed struct {
-}
+type ForumTopicClosed struct{}
 
 // ForumTopicEdited object represents a service message about an edited forum topic.
 type ForumTopicEdited struct {
@@ -1908,18 +1907,15 @@ type ForumTopicEdited struct {
 
 // ForumTopicReopened represents a service message about a forum topic
 // reopened in the chat. Currently holds no information.
-type ForumTopicReopened struct {
-}
+type ForumTopicReopened struct{}
 
 // GeneralForumTopicHidden represents a service message about General forum topic
 // hidden in the chat. Currently holds no information.
-type GeneralForumTopicHidden struct {
-}
+type GeneralForumTopicHidden struct{}
 
 // GeneralForumTopicUnhidden represents a service message about General forum topic
 // unhidden in the chat. Currently holds no information.
-type GeneralForumTopicUnhidden struct {
-}
+type GeneralForumTopicUnhidden struct{}
 
 // SharedUser contains information about a user that was
 // shared with the bot using a KeyboardButtonRequestUsers button.
@@ -3834,7 +3830,7 @@ type InlineQueryResultCachedAudio struct {
 	// InputMessageContent content of the message to be sent instead of the audio
 	//
 	// optional
-	InputMessageContent interface{} `json:"input_message_content,omitempty"`
+	InputMessageContent any `json:"input_message_content,omitempty"`
 }
 
 // InlineQueryResultCachedDocument is an inline query response with cached document.
@@ -3875,7 +3871,7 @@ type InlineQueryResultCachedDocument struct {
 	// InputMessageContent content of the message to be sent instead of the file
 	//
 	// optional
-	InputMessageContent interface{} `json:"input_message_content,omitempty"`
+	InputMessageContent any `json:"input_message_content,omitempty"`
 }
 
 // InlineQueryResultCachedGIF is an inline query response with cached gif.
@@ -3916,7 +3912,7 @@ type InlineQueryResultCachedGIF struct {
 	// InputMessageContent content of the message to be sent instead of the GIF animation.
 	//
 	// optional
-	InputMessageContent interface{} `json:"input_message_content,omitempty"`
+	InputMessageContent any `json:"input_message_content,omitempty"`
 }
 
 // InlineQueryResultCachedMPEG4GIF is an inline query response with cached
@@ -3959,7 +3955,7 @@ type InlineQueryResultCachedMPEG4GIF struct {
 	// InputMessageContent content of the message to be sent instead of the video animation.
 	//
 	// optional
-	InputMessageContent interface{} `json:"input_message_content,omitempty"`
+	InputMessageContent any `json:"input_message_content,omitempty"`
 }
 
 // InlineQueryResultCachedPhoto is an inline query response with cached photo.
@@ -4004,7 +4000,7 @@ type InlineQueryResultCachedPhoto struct {
 	// InputMessageContent content of the message to be sent instead of the photo.
 	//
 	// optional
-	InputMessageContent interface{} `json:"input_message_content,omitempty"`
+	InputMessageContent any `json:"input_message_content,omitempty"`
 }
 
 // InlineQueryResultCachedSticker is an inline query response with cached sticker.
@@ -4024,7 +4020,7 @@ type InlineQueryResultCachedSticker struct {
 	// InputMessageContent content of the message to be sent instead of the sticker
 	//
 	// optional
-	InputMessageContent interface{} `json:"input_message_content,omitempty"`
+	InputMessageContent any `json:"input_message_content,omitempty"`
 }
 
 // InlineQueryResultCachedVideo is an inline query response with cached video.
@@ -4067,7 +4063,7 @@ type InlineQueryResultCachedVideo struct {
 	// InputMessageContent content of the message to be sent instead of the video
 	//
 	// optional
-	InputMessageContent interface{} `json:"input_message_content,omitempty"`
+	InputMessageContent any `json:"input_message_content,omitempty"`
 }
 
 // InlineQueryResultCachedVoice is an inline query response with cached voice.
@@ -4102,7 +4098,7 @@ type InlineQueryResultCachedVoice struct {
 	// InputMessageContent content of the message to be sent instead of the voice message
 	//
 	// optional
-	InputMessageContent interface{} `json:"input_message_content,omitempty"`
+	InputMessageContent any `json:"input_message_content,omitempty"`
 }
 
 // InlineQueryResultArticle represents a link to an article or web page.
@@ -4114,7 +4110,7 @@ type InlineQueryResultArticle struct {
 	// Title of the result
 	Title string `json:"title"`
 	// InputMessageContent content of the message to be sent.
-	InputMessageContent interface{} `json:"input_message_content,omitempty"`
+	InputMessageContent any `json:"input_message_content,omitempty"`
 	// ReplyMarkup Inline keyboard attached to the message.
 	//
 	// optional
@@ -4185,7 +4181,7 @@ type InlineQueryResultAudio struct {
 	// InputMessageContent content of the message to be sent instead of the audio
 	//
 	// optional
-	InputMessageContent interface{} `json:"input_message_content,omitempty"`
+	InputMessageContent any `json:"input_message_content,omitempty"`
 }
 
 // InlineQueryResultContact is an inline query response contact.
@@ -4197,7 +4193,7 @@ type InlineQueryResultContact struct {
 	LastName            string                `json:"last_name"`
 	VCard               string                `json:"vcard"`
 	ReplyMarkup         *InlineKeyboardMarkup `json:"reply_markup,omitempty"`
-	InputMessageContent interface{}           `json:"input_message_content,omitempty"`
+	InputMessageContent any                   `json:"input_message_content,omitempty"`
 	ThumbURL            string                `json:"thumbnail_url"`
 	ThumbWidth          int                   `json:"thumbnail_width"`
 	ThumbHeight         int                   `json:"thumbnail_height"`
@@ -4244,7 +4240,7 @@ type InlineQueryResultDocument struct {
 	// InputMessageContent content of the message to be sent instead of the file
 	//
 	// optional
-	InputMessageContent interface{} `json:"input_message_content,omitempty"`
+	InputMessageContent any `json:"input_message_content,omitempty"`
 	// ThumbURL url of the thumbnail (jpeg only) for the file
 	//
 	// optional
@@ -4313,7 +4309,7 @@ type InlineQueryResultGIF struct {
 	// InputMessageContent content of the message to be sent instead of the GIF animation.
 	//
 	// optional
-	InputMessageContent interface{} `json:"input_message_content,omitempty"`
+	InputMessageContent any `json:"input_message_content,omitempty"`
 }
 
 // InlineQueryResultLocation is an inline query response location.
@@ -4356,7 +4352,7 @@ type InlineQueryResultLocation struct {
 	// InputMessageContent content of the message to be sent instead of the location
 	//
 	// optional
-	InputMessageContent interface{} `json:"input_message_content,omitempty"`
+	InputMessageContent any `json:"input_message_content,omitempty"`
 	// ThumbURL url of the thumbnail for the result
 	//
 	// optional
@@ -4425,7 +4421,7 @@ type InlineQueryResultMPEG4GIF struct {
 	// InputMessageContent content of the message to be sent instead of the video animation
 	//
 	// optional
-	InputMessageContent interface{} `json:"input_message_content,omitempty"`
+	InputMessageContent any `json:"input_message_content,omitempty"`
 }
 
 // InlineQueryResultPhoto is an inline query response photo.
@@ -4485,7 +4481,7 @@ type InlineQueryResultPhoto struct {
 	// InputMessageContent content of the message to be sent instead of the photo.
 	//
 	// optional
-	InputMessageContent interface{} `json:"input_message_content,omitempty"`
+	InputMessageContent any `json:"input_message_content,omitempty"`
 }
 
 // InlineQueryResultVenue is an inline query response venue.
@@ -4526,7 +4522,7 @@ type InlineQueryResultVenue struct {
 	// InputMessageContent content of the message to be sent instead of the venue
 	//
 	// optional
-	InputMessageContent interface{} `json:"input_message_content,omitempty"`
+	InputMessageContent any `json:"input_message_content,omitempty"`
 	// ThumbURL url of the thumbnail for the result
 	//
 	// optional
@@ -4601,7 +4597,7 @@ type InlineQueryResultVideo struct {
 	// an HTML-page as a result (e.g., a YouTube video).
 	//
 	// optional
-	InputMessageContent interface{} `json:"input_message_content,omitempty"`
+	InputMessageContent any `json:"input_message_content,omitempty"`
 }
 
 // InlineQueryResultVoice is an inline query response voice.
@@ -4640,7 +4636,7 @@ type InlineQueryResultVoice struct {
 	// InputMessageContent content of the message to be sent instead of the voice recording
 	//
 	// optional
-	InputMessageContent interface{} `json:"input_message_content,omitempty"`
+	InputMessageContent any `json:"input_message_content,omitempty"`
 }
 
 // ChosenInlineResult is an inline query result chosen by a User
@@ -5048,7 +5044,7 @@ type RevenueWithdrawalState struct {
 //   - TransactionPartnerOther
 //   - TransactionPartnerTelegramAds
 type TransactionPartner struct {
-	//Type of the transaction partner. Must be one of:
+	// Type of the transaction partner. Must be one of:
 	//	- fragment
 	//	- user
 	//  - other

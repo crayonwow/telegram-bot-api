@@ -68,7 +68,7 @@ media interface that we specified.
 We'll now create our media group with the photo and URL.
 
 ```go
-mediaGroup := NewMediaGroup(ChatID, []interface{}{
+mediaGroup := NewMediaGroup(ChatID, []any{
     photo,
     url,
 })

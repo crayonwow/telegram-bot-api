@@ -21,8 +21,7 @@ type PassportScope struct {
 
 // PassportScopeElementOneOfSeveral allows you to request any one of the
 // requested documents.
-type PassportScopeElementOneOfSeveral struct {
-}
+type PassportScopeElementOneOfSeveral struct{}
 
 // ScopeType is the scope type.
 func (eo *PassportScopeElementOneOfSeveral) ScopeType() string {
@@ -133,7 +132,7 @@ type (
 
 	// PassportElementError represents an error in the Telegram Passport element
 	// which was submitted that should be resolved by the user.
-	PassportElementError interface{}
+	PassportElementError any
 
 	// PassportElementErrorDataField represents an issue in one of the data
 	// fields that was provided by the user. The error is considered resolved

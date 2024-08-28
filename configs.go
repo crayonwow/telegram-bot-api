@@ -586,7 +586,7 @@ func (config DocumentConfig) files() []RequestFile {
 
 // StickerConfig contains information about a SendSticker request.
 type StickerConfig struct {
-	//Emoji associated with the sticker; only for just uploaded stickers
+	// Emoji associated with the sticker; only for just uploaded stickers
 	Emoji string
 	BaseFile
 }
@@ -891,7 +891,7 @@ type EditMessageLiveLocationConfig struct {
 	BaseEdit
 	Latitude             float64 // required
 	Longitude            float64 // required
-	LivePeriod           int     //optional
+	LivePeriod           int     // optional
 	HorizontalAccuracy   float64 // optional
 	Heading              int     // optional
 	ProximityAlertRadius int     // optional
@@ -1199,7 +1199,7 @@ func (config EditMessageCaptionConfig) method() string {
 type EditMessageMediaConfig struct {
 	BaseEdit
 
-	Media interface{}
+	Media any
 }
 
 func (EditMessageMediaConfig) method() string {
@@ -1393,22 +1393,22 @@ func (config DeleteWebhookConfig) params() (Params, error) {
 
 // InlineQueryResultsButton represents a button to be shown above inline query results. You must use exactly one of the optional fields.
 type InlineQueryResultsButton struct {
-	//Label text on the button
+	// Label text on the button
 	Text string `json:"text"`
-	//Description of the Web App that will be launched when the user presses the button. The Web App will be able to switch back to the inline mode using the method switchInlineQuery inside the Web App.
+	// Description of the Web App that will be launched when the user presses the button. The Web App will be able to switch back to the inline mode using the method switchInlineQuery inside the Web App.
 	//
-	//Optional
+	// Optional
 	WebApp *WebAppInfo `json:"web_app,omitempty"`
 	// Deep-linking parameter for the /start message sent to the bot when a user presses the button. 1-64 characters, only A-Z, a-z, 0-9, _ and - are allowed.
 	//
-	//Optional
+	// Optional
 	StartParam string `json:"start_parameter,omitempty"`
 }
 
 // InlineConfig contains information on making an InlineQuery response.
 type InlineConfig struct {
 	InlineQueryID string                    `json:"inline_query_id"`
-	Results       []interface{}             `json:"results"`
+	Results       []any                     `json:"results"`
 	CacheTime     int                       `json:"cache_time"`
 	IsPersonal    bool                      `json:"is_personal"`
 	NextOffset    string                    `json:"next_offset"`
@@ -1442,7 +1442,7 @@ type AnswerWebAppQueryConfig struct {
 	// WebAppQueryID is the unique identifier for the query to be answered.
 	WebAppQueryID string `json:"web_app_query_id"`
 	// Result is an InlineQueryResult object describing the message to be sent.
-	Result interface{} `json:"result"`
+	Result any `json:"result"`
 }
 
 func (config AnswerWebAppQueryConfig) method() string {
@@ -1989,12 +1989,12 @@ func (config InvoiceConfig) method() string {
 
 // InvoiceLinkConfig contains information for createInvoiceLink method
 type InvoiceLinkConfig struct {
-	Title                     string         //Required
-	Description               string         //Required
-	Payload                   string         //Required
-	ProviderToken             string         //Required
-	Currency                  string         //Required
-	Prices                    []LabeledPrice //Required
+	Title                     string         // Required
+	Description               string         // Required
+	Payload                   string         // Required
+	ProviderToken             string         // Required
+	Currency                  string         // Required
+	Prices                    []LabeledPrice // Required
 	MaxTipAmount              int
 	SuggestedTipAmounts       []int
 	ProviderData              string
@@ -2113,8 +2113,8 @@ func (config GetStarTransactionsConfig) params() (Params, error) {
 // RefundStarPaymentConfig refunds a successful payment in Telegram Stars.
 // Returns True on success.
 type RefundStarPaymentConfig struct {
-	UserID                  int64  //required
-	TelegramPaymentChargeID string //required
+	UserID                  int64  // required
+	TelegramPaymentChargeID string // required
 }
 
 func (config RefundStarPaymentConfig) method() string {
@@ -2343,7 +2343,7 @@ type NewStickerSetConfig struct {
 	Title           string
 	Stickers        []InputSticker
 	StickerType     string
-	NeedsRepainting bool //optional; Pass True if stickers in the sticker set must be repainted to the color of text when used in messages, the accent color if used as emoji status, white on chat photos, or another appropriate color based on context; for custom emoji sticker sets only
+	NeedsRepainting bool // optional; Pass True if stickers in the sticker set must be repainted to the color of text when used in messages, the accent color if used as emoji status, white on chat photos, or another appropriate color based on context; for custom emoji sticker sets only
 }
 
 func (config NewStickerSetConfig) method() string {
@@ -2825,7 +2825,7 @@ func (config UnpinAllGeneralForumTopicMessagesConfig) method() string {
 // Media consist of InputMedia items (InputMediaPhoto, InputMediaVideo).
 type MediaGroupConfig struct {
 	BaseChat
-	Media []interface{}
+	Media []any
 }
 
 func (config MediaGroupConfig) method() string {
@@ -3032,7 +3032,7 @@ func (config GetMyDescriptionConfig) params() (Params, error) {
 type SetMyDescriptionConfig struct {
 	// Pass an empty string to remove the dedicated description for the given language.
 	Description string
-	//If empty, the description will be applied to all users for whose language there is no dedicated description.
+	// If empty, the description will be applied to all users for whose language there is no dedicated description.
 	LanguageCode string
 }
 
@@ -3170,7 +3170,7 @@ func (config GetMyDefaultAdministratorRightsConfig) params() (Params, error) {
 // media and "attach://file-%d-thumb" for thumbnails.
 //
 // It is expected to be used in conjunction with prepareInputMediaFile.
-func prepareInputMediaParam(inputMedia interface{}, idx int) interface{} {
+func prepareInputMediaParam(inputMedia any, idx int) any {
 	switch m := inputMedia.(type) {
 	case InputMediaPhoto:
 		if m.Media.NeedsUpload() {
@@ -3221,7 +3221,7 @@ func prepareInputMediaParam(inputMedia interface{}, idx int) interface{} {
 // "file-%d" for the main file and "file-%d-thumb" for the thumbnail.
 //
 // It is expected to be used in conjunction with prepareInputMediaParam.
-func prepareInputMediaFile(inputMedia interface{}, idx int) []RequestFile {
+func prepareInputMediaFile(inputMedia any, idx int) []RequestFile {
 	files := []RequestFile{}
 
 	switch m := inputMedia.(type) {
@@ -3284,8 +3284,8 @@ func prepareInputMediaFile(inputMedia interface{}, idx int) []RequestFile {
 //
 // It is expected that files will get data from the associated function,
 // prepareInputMediaForFiles.
-func prepareInputMediaForParams(inputMedia []interface{}) []interface{} {
-	newMedia := make([]interface{}, len(inputMedia))
+func prepareInputMediaForParams(inputMedia []any) []any {
+	newMedia := make([]any, len(inputMedia))
 	copy(newMedia, inputMedia)
 
 	for idx, media := range inputMedia {
@@ -3302,7 +3302,7 @@ func prepareInputMediaForParams(inputMedia []interface{}) []interface{} {
 //
 // It is expected that params will get data from the associated function,
 // prepareInputMediaForParams.
-func prepareInputMediaForFiles(inputMedia []interface{}) []RequestFile {
+func prepareInputMediaForFiles(inputMedia []any) []RequestFile {
 	files := []RequestFile{}
 
 	for idx, media := range inputMedia {
