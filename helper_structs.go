@@ -49,11 +49,11 @@ func (chat *BaseChat) params() (Params, error) {
 	params.AddBool("protect_content", chat.ProtectContent)
 	params.AddNonEmpty("message_effect_id", chat.MessageEffectID)
 
-	err = params.AddInterface("reply_markup", chat.ReplyMarkup)
+	err = params.AddAny("reply_markup", chat.ReplyMarkup)
 	if err != nil {
 		return params, err
 	}
-	err = params.AddInterface("reply_parameters", chat.ReplyParameters)
+	err = params.AddAny("reply_parameters", chat.ReplyParameters)
 	return params, err
 }
 
@@ -87,7 +87,7 @@ func (edit BaseEdit) params() (Params, error) {
 		params.Merge(p1)
 	}
 
-	err := params.AddInterface("reply_markup", edit.ReplyMarkup)
+	err := params.AddAny("reply_markup", edit.ReplyMarkup)
 
 	return params, err
 }
@@ -97,7 +97,7 @@ type BaseSpoiler struct {
 	HasSpoiler bool
 }
 
-func (spoiler BaseSpoiler) params() (Params, error) {
+func (spoiler BaseSpoiler) params() (Params, error) { //nolint:unparam
 	params := make(Params)
 
 	if spoiler.HasSpoiler {
@@ -140,7 +140,7 @@ func (base BaseChatMessages) params() (Params, error) {
 	if err != nil {
 		return params, err
 	}
-	err = params.AddInterface("message_ids", base.MessageIDs)
+	err = params.AddAny("message_ids", base.MessageIDs)
 
 	return params, err
 }

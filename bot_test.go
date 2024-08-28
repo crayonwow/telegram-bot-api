@@ -709,7 +709,7 @@ func ExampleNewWebhook() {
 	}
 }
 
-func ExampleWebhookHandler() {
+func ExampleWebhookHandler() { //nolint:govet
 	bot, err := NewBotAPI("MyAwesomeBotToken")
 	if err != nil {
 		panic(err)
@@ -975,7 +975,7 @@ func TestCommands(t *testing.T) {
 		Description: "a private command",
 	})
 
-	if _, err := bot.Request(setCommands); err != nil {
+	if _, rerr := bot.Request(setCommands); rerr != nil {
 		t.Error("Unable to set commands")
 	}
 

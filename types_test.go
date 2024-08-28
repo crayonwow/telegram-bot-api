@@ -38,7 +38,7 @@ func TestMessageTime(t *testing.T) {
 	message := Message{Date: 0}
 
 	date := time.Unix(0, 0)
-	if message.Time() != date {
+	if !message.Time().Equal(date) {
 		t.Fail()
 	}
 }

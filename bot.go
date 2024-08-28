@@ -110,7 +110,7 @@ func (bot *BotAPI) MakeRequest(endpoint string, params Params) (*APIResponse, er
 	if err != nil {
 		return nil, err
 	}
-	defer resp.Body.Close()
+	defer closeAndLog(resp.Body)
 
 	var apiResp APIResponse
 	bytes, err := bot.decodeAPIResponse(resp.Body, &apiResp)
@@ -175,8 +175,8 @@ func (bot *BotAPI) UploadFiles(
 	// This code modified from the very helpful @HirbodBehnam
 	// https://github.com/go-telegram-bot-api/telegram-bot-api/issues/354#issuecomment-663856473
 	go func() {
-		defer w.Close()
-		defer m.Close()
+		defer closeAndLog(w)
+		defer closeAndLog(m)
 
 		for field, value := range params {
 			if err := m.WriteField(field, value); err != nil {
@@ -199,8 +199,8 @@ func (bot *BotAPI) UploadFiles(
 					return
 				}
 
-				if _, err := io.Copy(part, reader); err != nil {
-					w.CloseWithError(err)
+				if _, cerr := io.Copy(part, reader); cerr != nil {
+					w.CloseWithError(cerr)
 					return
 				}
 
@@ -238,7 +238,7 @@ func (bot *BotAPI) UploadFiles(
 	if err != nil {
 		return nil, err
 	}
-	defer resp.Body.Close()
+	defer closeAndLog(resp.Body)
 
 	var apiResp APIResponse
 	bytes, err := bot.decodeAPIResponse(resp.Body, &apiResp)
@@ -316,7 +316,7 @@ func hasFilesNeedingUpload(files []RequestFile) bool {
 func (bot *BotAPI) Request(c Chattable) (*APIResponse, error) {
 	params, err := c.params()
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("params: %w", err)
 	}
 
 	if t, ok := c.(Fileable); ok {
@@ -478,10 +478,7 @@ func (bot *BotAPI) ListenForWebhook(pattern string) UpdatesChannel {
 	http.HandleFunc(pattern, func(w http.ResponseWriter, r *http.Request) {
 		update, err := bot.HandleUpdate(r)
 		if err != nil {
-			errMsg, _ := json.Marshal(map[string]string{"error": err.Error()})
-			w.WriteHeader(http.StatusBadRequest)
-			w.Header().Set("Content-Type", "application/json")
-			_, _ = w.Write(errMsg)
+			writeError(w, err)
 			return
 		}
 
@@ -503,10 +500,7 @@ func (bot *BotAPI) ListenForWebhookRespReqFormat(
 
 		update, err := bot.HandleUpdate(r)
 		if err != nil {
-			errMsg, _ := json.Marshal(map[string]string{"error": err.Error()})
-			w.WriteHeader(http.StatusBadRequest)
-			w.Header().Set("Content-Type", "application/json")
-			_, _ = w.Write(errMsg)
+			writeError(w, err)
 			return
 		}
 
@@ -750,20 +744,18 @@ func (bot *BotAPI) GetMyDefaultAdministratorRights(
 func EscapeText(parseMode string, text string) string {
 	var replacer *strings.Replacer
 
-	if parseMode == ModeHTML {
+	switch parseMode {
+	case ModeHTML:
 		replacer = strings.NewReplacer("<", "&lt;", ">", "&gt;", "&", "&amp;")
-	} else if parseMode == ModeMarkdown {
-		replacer = strings.NewReplacer("_", "\\_", "*", "\\*", "`", "\\`", "[", "\\[")
-	} else if parseMode == ModeMarkdownV2 {
+	case ModeMarkdownV2:
 		replacer = strings.NewReplacer(
 			"_", "\\_", "*", "\\*", "[", "\\[", "]", "\\]", "(",
 			"\\(", ")", "\\)", "~", "\\~", "`", "\\`", ">", "\\>",
 			"#", "\\#", "+", "\\+", "-", "\\-", "=", "\\=", "|",
 			"\\|", "{", "\\{", "}", "\\}", ".", "\\.", "!", "\\!",
 		)
-	} else {
+	default:
 		return ""
 	}
-
 	return replacer.Replace(text)
 }

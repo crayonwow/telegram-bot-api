@@ -2476,12 +2476,12 @@ type InlineKeyboardButton struct {
 	//
 	// optional
 	SwitchInlineQueryCurrentChat *string `json:"switch_inline_query_current_chat,omitempty"`
-	//SwitchInlineQueryChosenChat If set, pressing the button will prompt the user to
-	//select one of their chats of the specified type, open that chat and insert the bot's
-	//username and the specified inline query in the input field.
+	// SwitchInlineQueryChosenChat If set, pressing the button will prompt the user to
+	// select one of their chats of the specified type, open that chat and insert the bot's
+	// username and the specified inline query in the input field.
 	// Not supported for messages sent on behalf of a Telegram Business account.
 	//
-	//optional
+	// optional
 	SwitchInlineQueryChosenChat *SwitchInlineQueryChosenChat `json:"switch_inline_query_chosen_chat,omitempty"`
 	// CallbackGame description of the game that will be launched when the user presses the button.
 	//
@@ -3272,7 +3272,7 @@ type ChatBoost struct {
 type ChatBoostUpdated struct {
 	// Chat which was boosted
 	Chat Chat `json:"chat"`
-	// Boost infomation about the chat boost
+	// Boost information about the chat boost
 	Boost ChatBoost `json:"boost"`
 }
 
@@ -3576,7 +3576,7 @@ type Sticker struct {
 	CustomEmojiID string `json:"custom_emoji_id,omitempty"`
 	// NeedsRepainting True, if the sticker must be repainted to a text color in messages, the color of the Telegram Premium badge in emoji status, white color on chat photos, or another appropriate color in other places
 	//
-	//optional
+	// optional
 	NeedsRepainting bool `json:"needs_reainting,omitempty"`
 	// FileSize
 	//
@@ -3609,7 +3609,7 @@ type StickerSet struct {
 	StickerType string `json:"sticker_type"`
 	// ContainsMasks true, if the sticker set contains masks
 	//
-	// deprecated. Use sticker_type instead
+	// Deprecated: Use sticker_type instead
 	ContainsMasks bool `json:"contains_masks"`
 	// Stickers list of all set stickers
 	Stickers []Sticker `json:"stickers"`
@@ -5068,7 +5068,7 @@ type TransactionPartner struct {
 // StarTransaction describes a Telegram Star transaction.
 type StarTransaction struct {
 	// Unique identifier of the transaction.
-	// Coincides with the identifer of the original transaction for refund transactions.
+	// Coincides with the identifier of the original transaction for refund transactions.
 	// Coincides with SuccessfulPayment.telegram_payment_charge_id for successful incoming payments from users.
 	ID string `json:"id"`
 	// Number of Telegram Stars transferred by the transaction
@@ -5084,7 +5084,7 @@ type StarTransaction struct {
 	// Only for outgoing transactions
 	//
 	// optional
-	Reciever *TransactionPartner `json:"reciever,omitempty"`
+	Receiver *TransactionPartner `json:"receiver,omitempty"`
 }
 
 // StarTransactions contains a list of Telegram Star transactions.

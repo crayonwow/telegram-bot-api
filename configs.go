@@ -310,11 +310,11 @@ func (config MessageConfig) params() (Params, error) {
 
 	params.AddNonEmpty("text", config.Text)
 	params.AddNonEmpty("parse_mode", config.ParseMode)
-	err = params.AddInterface("entities", config.Entities)
+	err = params.AddAny("entities", config.Entities)
 	if err != nil {
 		return params, err
 	}
-	err = params.AddInterface("link_preview_options", config.LinkPreviewOptions)
+	err = params.AddAny("link_preview_options", config.LinkPreviewOptions)
 
 	return params, err
 }
@@ -367,7 +367,7 @@ func (config ForwardMessagesConfig) params() (Params, error) {
 		return params, err
 	}
 	params.Merge(p1)
-	err = params.AddInterface("message_ids", config.MessageIDs)
+	err = params.AddAny("message_ids", config.MessageIDs)
 
 	return params, err
 }
@@ -403,7 +403,7 @@ func (config CopyMessageConfig) params() (Params, error) {
 	params.AddNonEmpty("caption", config.Caption)
 	params.AddNonEmpty("parse_mode", config.ParseMode)
 	params.AddBool("show_caption_above_media", config.ShowCaptionAboveMedia)
-	err = params.AddInterface("caption_entities", config.CaptionEntities)
+	err = params.AddAny("caption_entities", config.CaptionEntities)
 
 	return params, err
 }
@@ -433,7 +433,7 @@ func (config CopyMessagesConfig) params() (Params, error) {
 	}
 	params.Merge(p1)
 	params.AddBool("remove_caption", config.RemoveCaption)
-	err = params.AddInterface("message_ids", config.MessageIDs)
+	err = params.AddAny("message_ids", config.MessageIDs)
 
 	return params, err
 }
@@ -462,7 +462,7 @@ func (config PhotoConfig) params() (Params, error) {
 	params.AddNonEmpty("caption", config.Caption)
 	params.AddNonEmpty("parse_mode", config.ParseMode)
 	params.AddBool("show_caption_above_media", config.ShowCaptionAboveMedia)
-	err = params.AddInterface("caption_entities", config.CaptionEntities)
+	err = params.AddAny("caption_entities", config.CaptionEntities)
 	if err != nil {
 		return params, err
 	}
@@ -519,7 +519,7 @@ func (config AudioConfig) params() (Params, error) {
 	params.AddNonEmpty("title", config.Title)
 	params.AddNonEmpty("caption", config.Caption)
 	params.AddNonEmpty("parse_mode", config.ParseMode)
-	err = params.AddInterface("caption_entities", config.CaptionEntities)
+	err = params.AddAny("caption_entities", config.CaptionEntities)
 
 	return params, err
 }
@@ -635,7 +635,7 @@ func (config VideoConfig) params() (Params, error) {
 	params.AddNonEmpty("parse_mode", config.ParseMode)
 	params.AddBool("supports_streaming", config.SupportsStreaming)
 	params.AddBool("show_caption_above_media", config.ShowCaptionAboveMedia)
-	err = params.AddInterface("caption_entities", config.CaptionEntities)
+	err = params.AddAny("caption_entities", config.CaptionEntities)
 	if err != nil {
 		return params, err
 	}
@@ -691,7 +691,7 @@ func (config AnimationConfig) params() (Params, error) {
 	params.AddNonEmpty("caption", config.Caption)
 	params.AddNonEmpty("parse_mode", config.ParseMode)
 	params.AddBool("show_caption_above_media", config.ShowCaptionAboveMedia)
-	err = params.AddInterface("caption_entities", config.CaptionEntities)
+	err = params.AddAny("caption_entities", config.CaptionEntities)
 	if err != nil {
 		return params, err
 	}
@@ -784,11 +784,11 @@ func (config PaidMediaConfig) params() (Params, error) {
 	params.AddNonEmpty("parse_mode", config.ParseMode)
 	params.AddBool("show_caption_above_media", config.ShowCaptionAboveMedia)
 
-	err = params.AddInterface("media", config.Media)
+	err = params.AddAny("media", config.Media)
 	if err != nil {
 		return params, err
 	}
-	err = params.AddInterface("caption_entities", config.CaptionEntities)
+	err = params.AddAny("caption_entities", config.CaptionEntities)
 	return params, err
 }
 
@@ -833,7 +833,7 @@ func (config VoiceConfig) params() (Params, error) {
 	params.AddNonZero("duration", config.Duration)
 	params.AddNonEmpty("caption", config.Caption)
 	params.AddNonEmpty("parse_mode", config.ParseMode)
-	err = params.AddInterface("caption_entities", config.CaptionEntities)
+	err = params.AddAny("caption_entities", config.CaptionEntities)
 
 	return params, err
 }
@@ -1011,10 +1011,10 @@ func (config SendPollConfig) params() (Params, error) {
 
 	params["question"] = config.Question
 	params.AddNonEmpty("question_parse_mode", config.QuestionParseMode)
-	if err = params.AddInterface("question_entities", config.QuestionEntities); err != nil {
+	if err = params.AddAny("question_entities", config.QuestionEntities); err != nil {
 		return params, err
 	}
-	if err = params.AddInterface("options", config.Options); err != nil {
+	if err = params.AddAny("options", config.Options); err != nil {
 		return params, err
 	}
 	params["is_anonymous"] = strconv.FormatBool(config.IsAnonymous)
@@ -1026,7 +1026,7 @@ func (config SendPollConfig) params() (Params, error) {
 	params.AddNonEmpty("explanation_parse_mode", config.ExplanationParseMode)
 	params.AddNonZero("open_period", config.OpenPeriod)
 	params.AddNonZero("close_date", config.CloseDate)
-	err = params.AddInterface("explanation_entities", config.ExplanationEntities)
+	err = params.AddAny("explanation_entities", config.ExplanationEntities)
 
 	return params, err
 }
@@ -1155,11 +1155,11 @@ func (config EditMessageTextConfig) params() (Params, error) {
 
 	params["text"] = config.Text
 	params.AddNonEmpty("parse_mode", config.ParseMode)
-	err = params.AddInterface("entities", config.Entities)
+	err = params.AddAny("entities", config.Entities)
 	if err != nil {
 		return params, err
 	}
-	err = params.AddInterface("link_preview_options", config.LinkPreviewOptions)
+	err = params.AddAny("link_preview_options", config.LinkPreviewOptions)
 
 	return params, err
 }
@@ -1186,7 +1186,7 @@ func (config EditMessageCaptionConfig) params() (Params, error) {
 	params["caption"] = config.Caption
 	params.AddNonEmpty("parse_mode", config.ParseMode)
 	params.AddBool("show_caption_above_media", config.ShowCaptionAboveMedia)
-	err = params.AddInterface("caption_entities", config.CaptionEntities)
+	err = params.AddAny("caption_entities", config.CaptionEntities)
 
 	return params, err
 }
@@ -1212,7 +1212,7 @@ func (config EditMessageMediaConfig) params() (Params, error) {
 		return params, err
 	}
 
-	err = params.AddInterface("media", prepareInputMediaParam(config.Media, 0))
+	err = params.AddAny("media", prepareInputMediaParam(config.Media, 0))
 
 	return params, err
 }
@@ -1261,7 +1261,7 @@ func (config SetMessageReactionConfig) params() (Params, error) {
 		return params, err
 	}
 	params.AddBool("is_big", config.IsBig)
-	err = params.AddInterface("reaction", config.Reaction)
+	err = params.AddAny("reaction", config.Reaction)
 
 	return params, err
 }
@@ -1327,7 +1327,10 @@ func (config UpdateConfig) params() (Params, error) {
 	params.AddNonZero("offset", config.Offset)
 	params.AddNonZero("limit", config.Limit)
 	params.AddNonZero("timeout", config.Timeout)
-	params.AddInterface("allowed_updates", config.AllowedUpdates)
+	err := params.AddAny("allowed_updates", config.AllowedUpdates)
+	if err != nil {
+		return nil, fmt.Errorf("add interface: %w", err)
+	}
 
 	return params, nil
 }
@@ -1356,7 +1359,7 @@ func (config WebhookConfig) params() (Params, error) {
 
 	params.AddNonEmpty("ip_address", config.IPAddress)
 	params.AddNonZero("max_connections", config.MaxConnections)
-	err := params.AddInterface("allowed_updates", config.AllowedUpdates)
+	err := params.AddAny("allowed_updates", config.AllowedUpdates)
 	params.AddBool("drop_pending_updates", config.DropPendingUpdates)
 	params.AddNonEmpty("secret_token", config.SecretToken)
 
@@ -1426,11 +1429,11 @@ func (config InlineConfig) params() (Params, error) {
 	params.AddNonZero("cache_time", config.CacheTime)
 	params.AddBool("is_personal", config.IsPersonal)
 	params.AddNonEmpty("next_offset", config.NextOffset)
-	err := params.AddInterface("button", config.Button)
+	err := params.AddAny("button", config.Button)
 	if err != nil {
 		return params, err
 	}
-	err = params.AddInterface("results", config.Results)
+	err = params.AddAny("results", config.Results)
 
 	return params, err
 }
@@ -1453,7 +1456,7 @@ func (config AnswerWebAppQueryConfig) params() (Params, error) {
 	params := make(Params)
 
 	params["web_app_query_id"] = config.WebAppQueryID
-	err := params.AddInterface("result", config.Result)
+	err := params.AddAny("result", config.Result)
 
 	return params, err
 }
@@ -1568,7 +1571,7 @@ func (config RestrictChatMemberConfig) params() (Params, error) {
 
 	params.AddBool("use_independent_chat_permissions", config.UseIndependentChatPermissions)
 	params.AddNonZero64("until_date", config.UntilDate)
-	err = params.AddInterface("permissions", config.Permissions)
+	err = params.AddAny("permissions", config.Permissions)
 
 	return params, err
 }
@@ -1738,7 +1741,7 @@ func (config SetChatPermissionsConfig) params() (Params, error) {
 	}
 
 	params.AddBool("use_independent_chat_permissions", config.UseIndependentChatPermissions)
-	err = params.AddInterface("permissions", config.Permissions)
+	err = params.AddAny("permissions", config.Permissions)
 
 	return params, err
 }
@@ -1959,13 +1962,13 @@ func (config InvoiceConfig) params() (Params, error) {
 	params["description"] = config.Description
 	params["payload"] = config.Payload
 	params["currency"] = config.Currency
-	if err = params.AddInterface("prices", config.Prices); err != nil {
+	if err = params.AddAny("prices", config.Prices); err != nil {
 		return params, err
 	}
 
 	params.AddNonEmpty("provider_token", config.ProviderToken)
 	params.AddNonZero("max_tip_amount", config.MaxTipAmount)
-	err = params.AddInterface("suggested_tip_amounts", config.SuggestedTipAmounts)
+	err = params.AddAny("suggested_tip_amounts", config.SuggestedTipAmounts)
 	params.AddNonEmpty("start_parameter", config.StartParameter)
 	params.AddNonEmpty("provider_data", config.ProviderData)
 	params.AddNonEmpty("photo_url", config.PhotoURL)
@@ -2018,13 +2021,13 @@ func (config InvoiceLinkConfig) params() (Params, error) {
 	params["description"] = config.Description
 	params["payload"] = config.Payload
 	params["currency"] = config.Currency
-	if err := params.AddInterface("prices", config.Prices); err != nil {
+	if err := params.AddAny("prices", config.Prices); err != nil {
 		return params, err
 	}
 
 	params.AddNonEmpty("provider_token", config.ProviderToken)
 	params.AddNonZero("max_tip_amount", config.MaxTipAmount)
-	err := params.AddInterface("suggested_tip_amounts", config.SuggestedTipAmounts)
+	err := params.AddAny("suggested_tip_amounts", config.SuggestedTipAmounts)
 	params.AddNonEmpty("provider_data", config.ProviderData)
 	params.AddNonEmpty("photo_url", config.PhotoURL)
 	params.AddNonZero("photo_size", config.PhotoSize)
@@ -2062,7 +2065,7 @@ func (config ShippingConfig) params() (Params, error) {
 
 	params["shipping_query_id"] = config.ShippingQueryID
 	params.AddBool("ok", config.OK)
-	err := params.AddInterface("shipping_options", config.ShippingOptions)
+	err := params.AddAny("shipping_options", config.ShippingOptions)
 	params.AddNonEmpty("error_message", config.ErrorMessage)
 
 	return params, err
@@ -2303,7 +2306,10 @@ type GetCustomEmojiStickersConfig struct {
 func (config GetCustomEmojiStickersConfig) params() (Params, error) {
 	params := make(Params)
 
-	params.AddInterface("custom_emoji_ids", config.CustomEmojiIDs)
+	err := params.AddAny("custom_emoji_ids", config.CustomEmojiIDs)
+	if err != nil {
+		return nil, fmt.Errorf("add interface: %w", err)
+	}
 
 	return params, nil
 }
@@ -2359,7 +2365,7 @@ func (config NewStickerSetConfig) params() (Params, error) {
 
 	params.AddBool("needs_repainting", config.NeedsRepainting)
 	params.AddNonEmpty("sticker_type", string(config.StickerType))
-	err := params.AddInterface("stickers", config.Stickers)
+	err := params.AddAny("stickers", config.Stickers)
 
 	return params, err
 }
@@ -2388,7 +2394,7 @@ func (config AddStickerConfig) params() (Params, error) {
 
 	params.AddNonZero64("user_id", config.UserID)
 	params["name"] = config.Name
-	err := params.AddInterface("sticker", config.Sticker)
+	err := params.AddAny("sticker", config.Sticker)
 	return params, err
 }
 
@@ -2406,7 +2412,7 @@ func (config SetStickerPositionConfig) method() string {
 	return "setStickerPositionInSet"
 }
 
-func (config SetStickerPositionConfig) params() (Params, error) {
+func (config SetStickerPositionConfig) params() (Params, error) { //nolint:unparam
 	params := make(Params)
 
 	params["sticker"] = config.Sticker
@@ -2479,7 +2485,7 @@ func (config DeleteStickerConfig) method() string {
 	return "deleteStickerFromSet"
 }
 
-func (config DeleteStickerConfig) params() (Params, error) {
+func (config DeleteStickerConfig) params() (Params, error) { //nolint:unparam
 	params := make(Params)
 
 	params["sticker"] = config.Sticker
@@ -2509,7 +2515,7 @@ func (config ReplaceStickerInSetConfig) params() (Params, error) {
 	params["name"] = config.Name
 	params["old_sticker"] = config.OldSticker
 
-	err := params.AddInterface("sticker", config.Sticker)
+	err := params.AddAny("sticker", config.Sticker)
 
 	return params, err
 }
@@ -2528,7 +2534,7 @@ func (config SetStickerEmojiListConfig) params() (Params, error) {
 	params := make(Params)
 
 	params["sticker"] = config.Sticker
-	err := params.AddInterface("emoji_list", config.EmojiList)
+	err := params.AddAny("emoji_list", config.EmojiList)
 
 	return params, err
 }
@@ -2547,7 +2553,7 @@ func (config SetStickerKeywordsConfig) params() (Params, error) {
 	params := make(Params)
 
 	params["sticker"] = config.Sticker
-	err := params.AddInterface("keywords", config.Keywords)
+	err := params.AddAny("keywords", config.Keywords)
 
 	return params, err
 }
@@ -2566,7 +2572,7 @@ func (config SetStickerMaskPositionConfig) params() (Params, error) {
 	params := make(Params)
 
 	params["sticker"] = config.Sticker
-	err := params.AddInterface("keywords", config.MaskPosition)
+	err := params.AddAny("keywords", config.MaskPosition)
 
 	return params, err
 }
@@ -2838,7 +2844,7 @@ func (config MediaGroupConfig) params() (Params, error) {
 		return nil, err
 	}
 
-	err = params.AddInterface("media", prepareInputMediaForParams(config.Media))
+	err = params.AddAny("media", prepareInputMediaForParams(config.Media))
 
 	return params, err
 }
@@ -2929,7 +2935,7 @@ func (config GetMyCommandsConfig) method() string {
 func (config GetMyCommandsConfig) params() (Params, error) {
 	params := make(Params)
 
-	err := params.AddInterface("scope", config.Scope)
+	err := params.AddAny("scope", config.Scope)
 	params.AddNonEmpty("language_code", config.LanguageCode)
 
 	return params, err
@@ -2949,10 +2955,10 @@ func (config SetMyCommandsConfig) method() string {
 func (config SetMyCommandsConfig) params() (Params, error) {
 	params := make(Params)
 
-	if err := params.AddInterface("commands", config.Commands); err != nil {
+	if err := params.AddAny("commands", config.Commands); err != nil {
 		return params, err
 	}
-	err := params.AddInterface("scope", config.Scope)
+	err := params.AddAny("scope", config.Scope)
 	params.AddNonEmpty("language_code", config.LanguageCode)
 
 	return params, err
@@ -2970,7 +2976,7 @@ func (config DeleteMyCommandsConfig) method() string {
 func (config DeleteMyCommandsConfig) params() (Params, error) {
 	params := make(Params)
 
-	err := params.AddInterface("scope", config.Scope)
+	err := params.AddAny("scope", config.Scope)
 	params.AddNonEmpty("language_code", config.LanguageCode)
 
 	return params, err
@@ -3070,11 +3076,11 @@ func (config GetMyShortDescriptionConfig) params() (Params, error) {
 type SetMyShortDescriptionConfig struct {
 	// New short description for the bot; 0-120 characters.
 	//
-	//Pass an empty string to remove the dedicated short description for the given language.
+	// Pass an empty string to remove the dedicated short description for the given language.
 	ShortDescription string
-	//A two-letter ISO 639-1 language code.
+	// A two-letter ISO 639-1 language code.
 	//
-	//If empty, the short description will be applied to all users for whose language there is no dedicated short description.
+	// If empty, the short description will be applied to all users for whose language there is no dedicated short description.
 	LanguageCode string
 }
 
@@ -3109,7 +3115,7 @@ func (config SetChatMenuButtonConfig) params() (Params, error) {
 		return params, err
 	}
 
-	err = params.AddInterface("menu_button", config.MenuButton)
+	err = params.AddAny("menu_button", config.MenuButton)
 
 	return params, err
 }
@@ -3138,7 +3144,7 @@ func (config SetMyDefaultAdministratorRightsConfig) method() string {
 func (config SetMyDefaultAdministratorRightsConfig) params() (Params, error) {
 	params := make(Params)
 
-	err := params.AddInterface("rights", config.Rights)
+	err := params.AddAny("rights", config.Rights)
 	params.AddBool("for_channels", config.ForChannels)
 
 	return params, err

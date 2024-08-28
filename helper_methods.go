@@ -6,6 +6,8 @@ import (
 	"encoding/hex"
 	"errors"
 	"fmt"
+	"io"
+	"net/http"
 	"net/url"
 	"sort"
 	"strings"
@@ -460,11 +462,11 @@ func NewInlineQueryResultMPEG4GIF(id, url string) InlineQueryResultMPEG4GIF {
 }
 
 // NewInlineQueryResultCachedMPEG4GIF create a new inline query with cached MPEG4 GIF.
-func NewInlineQueryResultCachedMPEG4GIF(id, MPEG4GIFID string) InlineQueryResultCachedMPEG4GIF {
+func NewInlineQueryResultCachedMPEG4GIF(id, _MPEG4GIFID string) InlineQueryResultCachedMPEG4GIF {
 	return InlineQueryResultCachedMPEG4GIF{
 		Type:        "mpeg4_gif",
 		ID:          id,
-		MPEG4FileID: MPEG4GIFID,
+		MPEG4FileID: _MPEG4GIFID,
 	}
 }
 
@@ -1205,4 +1207,22 @@ func ValidateWebAppData(token, telegramInitData string) (bool, error) {
 	}
 
 	return true, nil
+}
+
+func closeAndLog(c io.Closer) {
+	err := c.Close()
+	if err != nil {
+		log.Println(err)
+	}
+}
+
+func writeError(w http.ResponseWriter, err error) {
+	errMsg := `{"error":"` + err.Error() + `"}`
+	w.WriteHeader(http.StatusBadRequest)
+	w.Header().Set("Content-Type", "application/json")
+	_, _err := w.Write([]byte(errMsg))
+	if _err != nil {
+		// TODO: log debug
+		log.Println(_err)
+	}
 }
