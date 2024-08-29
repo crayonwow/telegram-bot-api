@@ -2,7 +2,8 @@ package tgbotapi
 
 import (
 	"errors"
-	stdlog "log"
+	"fmt"
+	"log/slog"
 	"os"
 )
 
@@ -15,7 +16,26 @@ type BotLogger interface {
 	Printf(format string, v ...any)
 }
 
-var log BotLogger = stdlog.New(os.Stderr, "", stdlog.LstdFlags)
+type slogWrapper struct {
+	*slog.Logger
+}
+
+func (sl *slogWrapper) Println(v ...any) {
+	sl.Logger.Info(fmt.Sprintln(v...))
+}
+
+func (sl *slogWrapper) Printf(format string, v ...any) {
+	sl.Logger.Info(fmt.Sprintf(format, v...))
+}
+
+var log BotLogger = &slogWrapper{
+	slog.New(
+		slog.NewTextHandler(
+			os.Stderr,
+			&slog.HandlerOptions{AddSource: false, Level: slog.LevelInfo},
+		),
+	),
+}
 
 // SetLogger specifies the logger that the package should use.
 func SetLogger(logger BotLogger) error {
